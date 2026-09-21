@@ -1,0 +1,18 @@
+{
+  "title": "數學練習室",
+  "intro": "把數學互動練習集中在這裡。每張卡片寫明適合誰、在學什麼，點進去就能玩。",
+  "activities": [
+    {
+      "slug": "brick-kingdom",
+      "title": "積木王國：4 位數減法大冒險",
+      "audience": "國小中高年級",
+      "learns": "四位數直式減法、借位，以及遇到 0 時的連續借位",
+      "summary": "從個位一位一位算。用數字鍵盤作答，不夠減就按「借 1」，看十進位積木怎麼拆開。",
+      "thumb": "thumbs/brick-kingdom.png",
+      "href": "play/brick-kingdom/",
+      "kind": "vite",
+      "source": "activities/brick-kingdom",
+      "tags": ["減法", "數感"]
+    }
+  ]
+}

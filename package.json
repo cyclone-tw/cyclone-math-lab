@@ -1,0 +1,9 @@
+{
+  "name": "cyclone-math-lab",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "site": "node scripts/build-site.mjs",
+    "dev": "pnpm --dir activities/brick-kingdom dev"
+  }
+}
