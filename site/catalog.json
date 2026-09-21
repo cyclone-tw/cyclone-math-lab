@@ -13,6 +13,30 @@
       "kind": "vite",
       "source": "activities/brick-kingdom",
       "tags": ["減法", "數感"]
+    },
+    {
+      "slug": "ones-add",
+      "title": "個位數加法心算訓練器",
+      "audience": "國小一年級；其他年級尚需扳手指或從 1 數的學生也可",
+      "learns": "10 以內加法、看圖點加、數數合計",
+      "summary": "先設定題數與數字範圍。遊戲中要先把「後來加上的」圖卡點進來，才能用數字鍵作答。可讀題、隱藏圖卡、匯出 Word 學習單。",
+      "thumb": "thumbs/ones-add.png",
+      "href": "play/ones-add/index.html?op=add",
+      "kind": "static",
+      "source": "activities/ones-mental",
+      "tags": ["加法", "特教", "心算"]
+    },
+    {
+      "slug": "ones-sub",
+      "title": "個位數減法心算訓練器",
+      "audience": "國小一年級；其他年級尚需扳手指或從 1 數的學生也可",
+      "learns": "10 以內減法、看圖點掉、數數剩餘",
+      "summary": "先設定題數與數字範圍。遊戲中要先把該拿走的圖卡打叉，才能用數字鍵作答。可整理圖卡、讀題、匯出 Word 學習單。",
+      "thumb": "thumbs/ones-sub.png",
+      "href": "play/ones-sub/index.html?op=sub",
+      "kind": "static",
+      "source": "activities/ones-mental",
+      "tags": ["減法", "特教", "心算"]
     }
   ]
 }

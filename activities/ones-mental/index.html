@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>個位數心算訓練器</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app" class="app" data-op="sub">
+      <header class="topbar">
+        <button type="button" class="pill" id="btn-home" hidden>← 回設定</button>
+        <div class="brand">
+          <span class="mascot" id="mascot">🐰</span>
+          <div>
+            <h1 id="title">減法心算練習器</h1>
+            <p id="subtitle">特教視覺化減法學習輔具</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button type="button" class="pill" id="btn-toggle-visuals" title="隱藏或顯示圖卡">👁 隱藏圖卡</button>
+          <button type="button" class="pill" id="btn-settings" title="語音與聲音設定">⚙</button>
+          <span class="score" aria-label="星星">⭐ <b id="star-count">0</b></span>
+        </div>
+      </header>
+
+      <section id="screen-home" class="screen home">
+        <div class="card setup">
+          <div class="welcome">
+            <span id="welcome-icon">🧩</span>
+            <div>
+              <h2 id="welcome-title">歡迎來到減法心算訓練器！</h2>
+              <p id="welcome-lead">看圖點一點 · 扣掉算一算 · 輕鬆學減法</p>
+            </div>
+          </div>
+
+          <label class="field">
+            <div class="field-head">
+              <span>選擇練習題數</span>
+              <b id="q-count-label">10 題</b>
+            </div>
+            <input id="q-count" type="range" min="0" max="4" value="1" />
+            <div class="ticks"><span>5</span><span>10</span><span>15</span><span>20</span><span>50</span></div>
+          </label>
+
+          <div class="ranges">
+            <p class="hint" id="range-hint">系統自動確保不會減出負數</p>
+            <label class="field">
+              <div class="field-head">
+                <span id="label-a">原本有的（被減數）</span>
+                <b><span id="a-min-v">2</span>–<span id="a-max-v">10</span></b>
+              </div>
+              <div class="dual">
+                <input id="a-min" type="range" min="1" max="10" value="2" />
+                <input id="a-max" type="range" min="1" max="10" value="10" />
+              </div>
+            </label>
+            <label class="field">
+              <div class="field-head">
+                <span id="label-b">要拿走的（減數）</span>
+                <b><span id="b-min-v">1</span>–<span id="b-max-v">9</span></b>
+              </div>
+              <div class="dual">
+                <input id="b-min" type="range" min="1" max="10" value="1" />
+                <input id="b-max" type="range" min="1" max="10" value="9" />
+              </div>
+            </label>
+          </div>
+
+          <label class="check">
+            <input id="unique" type="checkbox" checked />
+            <span>題目盡量不重複</span>
+          </label>
+
+          <div class="actions">
+            <button type="button" class="btn primary" id="btn-start">▶ 開始練習遊戲</button>
+            <button type="button" class="btn secondary" id="btn-export-home">📄 匯出 Word 學習單</button>
+          </div>
+        </div>
+      </section>
+
+      <section id="screen-game" class="screen game" hidden>
+        <div class="game-bar">
+          <span id="progress">第 1 / 10 題</span>
+          <button type="button" class="pill" id="btn-export-game">匯出這組 Word 學習單</button>
+        </div>
+
+        <div class="story">
+          <span id="story-emoji">🍎</span>
+          <p id="story-text"></p>
+          <button type="button" class="pill" id="btn-read">🔊 讀題目</button>
+        </div>
+
+        <div class="play-grid">
+          <div class="visual card" id="visual-area">
+            <div class="visual-head">
+              <strong id="visual-label">原本有的</strong>
+              <span class="badge" id="instruction-badge">請點擊拿走 3 個</span>
+            </div>
+            <div class="item-grid" id="item-grid" aria-live="polite"></div>
+            <p class="tip" id="visual-tip">提示：點擊物品打叉叉（扣掉它）喔！</p>
+            <button type="button" class="btn soft" id="btn-reorder" hidden>🔄 重新整理圖卡</button>
+          </div>
+
+          <div class="math card" id="math-area">
+            <p class="math-lead" id="math-lead">算一算，剩下多少呢？</p>
+            <div class="formula" aria-hidden="true">
+              <span class="n blue" id="f-a">5</span>
+              <span class="op" id="f-op">−</span>
+              <span class="n rose" id="f-b">3</span>
+              <span class="eq">＝</span>
+              <span class="result" id="f-result">？</span>
+            </div>
+            <p class="ask" id="unit-question">現在剩下幾顆？</p>
+            <p class="pad-label">請點擊正確的數字答案：</p>
+            <div class="keypad" id="keypad" role="group" aria-label="答案數字鍵盤"></div>
+            <div class="math-foot">
+              <button type="button" class="pill warn" id="btn-hint">需要幫忙嗎？</button>
+              <button type="button" class="pill" id="btn-stickers">貼紙冊 (<span id="sticker-count">0</span>)</button>
+              <button type="button" class="btn primary small" id="btn-next">下一題</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <div id="modal-alert" class="modal" hidden>
+      <div class="modal-card">
+        <div class="alert-ico">!</div>
+        <h3>哎呀！</h3>
+        <p id="alert-msg"></p>
+        <button type="button" class="btn danger" id="btn-close-alert">知道了</button>
+      </div>
+    </div>
+
+    <div id="modal-success" class="modal" hidden>
+      <div class="modal-card success">
+        <p class="big-sticker" id="new-sticker">🦊</p>
+        <h3>答對了！</h3>
+        <p>獲得一枚貼紙</p>
+        <button type="button" class="btn primary" id="btn-modal-next">下一題</button>
+      </div>
+    </div>
+
+    <div id="modal-settings" class="modal" hidden>
+      <div class="modal-card left">
+        <h3>系統設定</h3>
+        <label class="field">
+          <span>選擇報讀語音</span>
+          <select id="voice-select"></select>
+        </label>
+        <div class="row">
+          <span>音效</span>
+          <button type="button" class="pill on" id="btn-sound">已開啟</button>
+        </div>
+        <div class="actions">
+          <button type="button" class="btn secondary" id="btn-close-settings">關閉</button>
+          <button type="button" class="btn primary" id="btn-save-settings">儲存</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="modal-stickers" class="modal" hidden>
+      <div class="modal-card">
+        <h3>貼紙冊</h3>
+        <div class="sticker-grid" id="sticker-grid"></div>
+        <button type="button" class="btn primary" id="btn-close-stickers">關閉</button>
+      </div>
+    </div>
+
+    <script src="./app.js" type="module"></script>
+  </body>
+</html>
